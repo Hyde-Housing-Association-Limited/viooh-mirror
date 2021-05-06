@@ -11,14 +11,13 @@
   :dependencies [[org.clojure/clojure "1.10.3"]
 
                  [samsara/trackit-core "0.9.3"]
-                 [samsara/trackit-prometheus "0.9.3"]
                  [integrant "0.8.0"]
                  [http-kit "2.5.3"]
                  [cheshire "5.10.0"]
                  [metosin/compojure-api "1.1.13"]
 
-                 [com.brunobonacci/safely "0.5.0"]
-                 [com.brunobonacci/oneconfig "0.16.0"
+                 [com.brunobonacci/safely "0.7.0-alpha3"]
+                 [com.brunobonacci/oneconfig "0.21.0"
                   :exclusions [samsara/trackit-core com.fasterxml.jackson.core/jackson-databind]]
                  [com.fasterxml.jackson.core/jackson-databind "2.10.2"]
 
