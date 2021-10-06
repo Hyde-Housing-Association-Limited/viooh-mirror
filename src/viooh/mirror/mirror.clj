@@ -281,16 +281,19 @@
                              key-subject-name-strategy value-subject-name-strategy)
         dest-serdes (s/serdes serdes {:url     dest-schema-registry-url
                                       :configs dest-schema-registry-configs}
-                              key-subject-name-strategy value-subject-name-strategy)]
+                              key-subject-name-strategy value-subject-name-strategy)
+        hide-basic-auth-fn (fn [m] (if (find m :basic.auth.user.info)
+                                     (assoc m :basic.auth.user.info "[hidden]")
+                                     m))]
     (thread {:name name}
             ;; It sleeps for a bounded random amount of time.  It is used to
             ;; spread the mirror starts uniformly and avoid polling storms.
             (safely.core/sleep 5000 :+/- 0.5)
 
             (u/with-context {:mirror-name name :src-schema-registry-url src-schema-registry-url
-                             :src-schema-registry-configs src-schema-registry-configs
+                             :src-schema-registry-configs (hide-basic-auth-fn src-schema-registry-configs)
                              :dest-schema-registry-url dest-schema-registry-url
-                             :dest-schema-registry-configs dest-schema-registry-configs
+                             :dest-schema-registry-configs (hide-basic-auth-fn dest-schema-registry-configs)
                              :src-topic src-topic :dest-topic dest-topic}
               (log/infof "[%s] Starting mirror" name)
               (u/log ::mirror-started)
