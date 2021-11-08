@@ -25,6 +25,7 @@
             [clojure.tools.reader.edn :as edn]
             [integrant.core :as ig]
             [samsara.trackit :as trackit]
+            [slingshot.slingshot :refer [throw+ try+]]
             [com.brunobonacci.mulog :as u]
             [com.brunobonacci.mulog.utils :as ut]))
 
@@ -252,6 +253,32 @@
             (dissoc config :private-key :cert-pem :ca-cert-pem))
      config)))
 
+(defn- add-cloudwatch-transformer [publisher]
+  (if (= :cloudwatch (:type publisher))
+    (assoc publisher :transform
+      (fn [events]
+        (map
+          (fn [event]
+            (reduce
+              (fn [m k]
+                (if (= (namespace k) "safely")
+                  (let [normalized (keyword (str "safely_" (name k)))]
+                    (assoc m normalized (get m k)))
+                  m))
+            event
+            (keys event)))
+          events)))
+    publisher))
+
+(defn- normalize-safely-mulog-fields
+  "Replace / characters in log events with _, so they're
+   compatible with AWS metrics, which can't match on /"
+  [config]
+  (if (= :multi (get-in config [:mulog :type]))
+    (update-in config [:mulog :publishers]
+      (fn [publishers]
+        (mapv add-cloudwatch-transformer publishers)))
+    config))
 
 
 (defn- apply-single-mirror-default
@@ -341,13 +368,22 @@
   (print-vanity-title)
   (log/infof "Starting viooh-mirror v%s in env: '%s'" (version) (env))
   (let [config-entry (configure {:key (config-key) :env (env) :version (version)})
-        cfg (:value config-entry)
-        cfg (apply-config-defaults cfg)]
+        cfg (-> config-entry 
+                :value 
+                apply-config-defaults
+                normalize-safely-mulog-fields)]
 
     (start-metrics! cfg)
     (u/log ::app-started :config-change-num (:change-num config-entry))
-    (ig/init {::http-server/server cfg
-              ::mirror/mirrors cfg})))
+
+    (try+
+      (ig/init {::http-server/server cfg
+                ::mirror/mirrors cfg})
+      (catch Object _
+        (u/log ::uncaught-exception
+          :exception (:throwable &throw-context))
+          :uncaught  true
+        (throw+)))))
 
 
 

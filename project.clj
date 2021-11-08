@@ -15,6 +15,7 @@
                  [http-kit "2.5.3"]
                  [cheshire "5.10.0"]
                  [metosin/compojure-api "1.1.13"]
+                 [slingshot "0.12.2"]
 
                  [com.brunobonacci/safely "0.7.0-alpha3"]
                  [com.brunobonacci/oneconfig "0.21.0"
