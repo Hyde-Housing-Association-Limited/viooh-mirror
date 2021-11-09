@@ -261,8 +261,8 @@
           (fn [event]
             (reduce
               (fn [m k]
-                (if (= (namespace k) "safely")
-                  (let [normalized (keyword (str "safely_" (name k)))]
+                (if (contains? #{"safely", "mulog"} (namespace k))
+                  (let [normalized (keyword (str (namespace k) "_" (name k)))]
                     (assoc m normalized (get m k)))
                   m))
             event
@@ -270,7 +270,7 @@
           events)))
     publisher))
 
-(defn- normalize-safely-mulog-fields
+(defn- normalize-mulog-fields
   "Replace / characters in log events with _, so they're
    compatible with AWS metrics, which can't match on /"
   [config]
@@ -371,7 +371,7 @@
         cfg (-> config-entry 
                 :value 
                 apply-config-defaults
-                normalize-safely-mulog-fields)]
+                normalize-mulog-fields)]
 
     (start-metrics! cfg)
     (u/log ::app-started :config-change-num (:change-num config-entry))
