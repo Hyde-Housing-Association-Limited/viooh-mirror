@@ -334,7 +334,8 @@
   "returns the current environmet the system is running in.
    This has to be provided by the infrastructure"
   []
-  (or (System/getenv "ONE_CONF_KEY") "viooh-mirror"))
+  (or (System/getenv "APP_NAME")
+      (System/getenv "ONE_CONF_KEY") "viooh-mirror"))
 
 
 
