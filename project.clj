@@ -27,7 +27,7 @@
 
                  [clj-commons/clj-yaml               "1.0.27"]
                  [org.json/json "20231013"]
-                 [org.apache.avro/avro   "1.12.0"]
+                 [org.apache.avro/avro   "1.11.4"]
                  [com.google.guava/guava  "32.0.0-jre"]
                  [com.cognitect.aws/api   "0.8.692"]
                  [io.netty/netty-codec   "4.1.68.Final"]
