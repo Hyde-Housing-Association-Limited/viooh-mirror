@@ -37,7 +37,12 @@
 
                  [fundingcircle/jackdaw "0.7.10"]
                  [io.confluent/kafka-schema-registry-client "5.4.1"
-                  :exclusions [com.fasterxml.jackson.core/jackson-databind]]
+                  :exclusions [com.fasterxml.jackson.core/jackson-databind
+                               io.netty/netty-codec-http]]
+                 
+                 [io.netty/netty-codec-http "4.1.108.Final"]
+                 [com.damnhandy/handy-uri-templates "2.1.8"
+                  :exclusions [com.fasterxml.jackson.core/jacksonG-databind]]
 
                  ;;logging
                  [org.clojure/tools.logging "1.1.0"]
