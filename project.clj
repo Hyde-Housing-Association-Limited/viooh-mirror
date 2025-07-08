@@ -9,7 +9,10 @@
 
   :repositories [["confluent" {:url "https://packages.confluent.io/maven/"}]]
 
-  :managed-dependencies [[com.fasterxml.jackson.core/jackson-databind ~jackson]]
+  :managed-dependencies [[com.fasterxml.jackson.core/jackson-core ~jackson]
+                         [com.fasterxml.jackson.core/jackson-databind ~jackson]
+                         [com.fasterxml.jackson.dataformat/jackson-dataformat-cbor ~jackson]
+                         [com.fasterxml.jackson.dataformat/jackson-dataformat-smile ~jackson]]
   :dependencies [[org.clojure/clojure "1.11.2"]
 
                  [samsara/trackit-core "0.9.3"]
