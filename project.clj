@@ -1,3 +1,4 @@
+(def jackson "2.15.0")
 (defproject com.viooh/viooh-mirror (-> "resources/viooh-mirror.version" slurp .trim)
   :description "Utility to mirror selected Kafka topics and their schemas across clusters."
   :url "https://github.com/VIOOH/viooh-mirror"
@@ -8,6 +9,10 @@
 
   :repositories [["confluent" {:url "https://packages.confluent.io/maven/"}]]
 
+  :managed-dependencies [[com.fasterxml.jackson.core/jackson-core ~jackson]
+                         [com.fasterxml.jackson.core/jackson-databind ~jackson]
+                         [com.fasterxml.jackson.dataformat/jackson-dataformat-cbor ~jackson]
+                         [com.fasterxml.jackson.dataformat/jackson-dataformat-smile ~jackson]]
   :dependencies [[org.clojure/clojure "1.11.2"]
 
                  [samsara/trackit-core "0.9.3"]
@@ -20,11 +25,10 @@
 
                  [com.brunobonacci/safely "0.7.0-alpha3"]
                  [com.brunobonacci/oneconfig "0.22.0"
-                  :exclusions [samsara/trackit-core com.fasterxml.jackson.core/jackson-databind
+                  :exclusions [samsara/trackit-core 
                                clj-commons/clj-yaml
                                com.cognitect.aws/api]]
-                 [com.fasterxml.jackson.core/jackson-databind "2.13.4.2"]
-
+                 
                  [clj-commons/clj-yaml               "1.0.27"]
                  [org.json/json "20231013"]
                  [org.apache.avro/avro   "1.11.4"]
@@ -37,8 +41,7 @@
 
                  [fundingcircle/jackdaw "0.7.10"]
                  [io.confluent/kafka-schema-registry-client "5.4.1"
-                  :exclusions [com.fasterxml.jackson.core/jackson-databind
-                               io.netty/netty-codec-http]]
+                  :exclusions [io.netty/netty-codec-http]]
                  
                  [io.netty/netty-codec-http "4.1.108.Final"]
                  [com.damnhandy/handy-uri-templates "2.1.8"
