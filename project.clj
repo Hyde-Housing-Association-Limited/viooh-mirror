@@ -1,4 +1,4 @@
-(def jackson "2.17.1")
+(def jackson "2.15.0")
 (defproject com.viooh/viooh-mirror (-> "resources/viooh-mirror.version" slurp .trim)
   :description "Utility to mirror selected Kafka topics and their schemas across clusters."
   :url "https://github.com/VIOOH/viooh-mirror"
