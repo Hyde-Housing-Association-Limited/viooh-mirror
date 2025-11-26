@@ -13,7 +13,8 @@
                  [samsara/trackit-core "0.9.3"]
                  [integrant "0.8.0"]
                  [http-kit "2.6.0"]
-                 [cheshire "5.11.0"]
+                 [cheshire "5.11.0"
+                  :exclusions [com.fasterxml.jackson.core/jackson-core]]
                  [metosin/compojure-api "1.1.13"
                   :exclusions [commons-fileupload/commons-fileupload]]
                  [slingshot "0.12.2"]
@@ -30,7 +31,7 @@
                  [org.apache.avro/avro   "1.11.4"]
                  [com.google.guava/guava  "32.0.0-jre"]
                  [com.cognitect.aws/api   "0.8.692"]
-                 [io.netty/netty-codec   "4.1.68.Final"]
+                 [io.netty/netty-codec   "4.1.125.Final"]
 
 
                  [com.viooh/kafka-ssl-helper "0.9.0"]
@@ -40,7 +41,7 @@
                   :exclusions [com.fasterxml.jackson.core/jackson-databind
                                io.netty/netty-codec-http]]
                  
-                 [io.netty/netty-codec-http "4.1.108.Final"]
+                 [io.netty/netty-codec-http "4.1.125.Final"]
                  [com.damnhandy/handy-uri-templates "2.1.8"
                   :exclusions [com.fasterxml.jackson.core/jacksonG-databind]]
 
@@ -57,7 +58,10 @@
                  [com.brunobonacci/mulog-cloudwatch    "0.8.1"
                   :exclusions [com.cognitect.aws/api]]
                  [com.brunobonacci/mulog-mbean-sampler "0.8.1"]
-                 [com.brunobonacci/mulog-jvm-metrics   "0.8.1"]]
+                 [com.brunobonacci/mulog-jvm-metrics   "0.8.1"]
+
+                 ;; dependency overrides
+                 [com.fasterxml.jackson.core/jackson-core "2.15.0"]]
 
   :main viooh.mirror.main
 
